@@ -1,0 +1,18 @@
+{
+  "name": "splitjs-esbuild-example",
+  "version": "1.0.0",
+  "description": "Minimal example using Split.js with esbuild bundler.",
+  "type": "module",
+  "scripts": {
+    "dev": "esbuild main.js --bundle --outfile=dist/bundle.js --servedir=. --sourcemap",
+    "build": "esbuild main.js --bundle --minify --outfile=dist/bundle.js"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "filepond": "^4.32.10",
+    "split.js": "^1.6.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.0"
+  }
+}

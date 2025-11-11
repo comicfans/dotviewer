@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Split.js Example (Module)</title>
+    <link rel="stylesheet" href="split.css" />
+    <link rel="stylesheet" href="dist/bundle.css" />
+  </head>
+  <body>
+    <div class="split">
+      <div id="split-0">
+
+        <div class='container d-flex flex-column h-100'>
+
+        <div class="mb-3">
+          <label for="localDot" class="form-label">load local dot(or drag & drop here)</label>
+          <input class="form-control" type="file" id="localDot">
+        </div>
+
+
+        <div class="d-flex flex-column h-100 mb-3">
+          <label for="dotContents" class="form-label">dot contents</label>
+          <textarea class="form-control flex-grow-1" id="dotContents"></textarea>
+        </div>
+
+
+          </div>
+
+
+      </div>
+      <div id="split-1"></div>
+    </div>
+
+
+
+
+
+    <script type="module" src="dist/bundle.js"></script>
+  </body>
+</html>
