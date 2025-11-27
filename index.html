@@ -9,27 +9,30 @@
   </head>
   <body>
     <div class="split">
-      <div id="split-0">
+      <div id="split-editor">
 
-        <div class='container d-flex flex-column h-100'>
+        <div class='container mb-3 d-flex flex-column h-100'>
 
-        <div class="mb-3">
-          <label for="localDot" class="form-label">load local dot(or drag & drop here)</label>
-          <input class="form-control" type="file" id="localDot">
-        </div>
-
-
-        <div class="d-flex flex-column h-100 mb-3">
-          <label for="dotContents" class="form-label">dot contents</label>
-          <textarea class="form-control flex-grow-1" id="dotContents"></textarea>
-        </div>
-
-
+          <div class="mb-3">
+            <label for="local-dot" class="form-label">load local dot(or drag & drop here)</label>
+            <input class="form-control" type="file" id="local-dot">
           </div>
 
 
+          <div class="d-flex flex-column h-100 mb-3">
+            <label for="dot-contents" class="form-label">dot contents</label>
+            <textarea class="form-control flex-grow-1" id="dot-contents">digraph { a -> b }</textarea>
+          </div>
+          <input id="message" class="mb-3 form-control" type="text" value="" aria-label="message" readonly>
+
+        </div>
+
+
       </div>
-      <div id="split-1"></div>
+      <div id="split-graph">
+        <div id="graph" style="text-align: center;"  class='h-100'></div>
+
+      </div>
     </div>
 
 

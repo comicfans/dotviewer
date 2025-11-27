@@ -9,7 +9,12 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.8",
+    "d3": "^7.9.0",
+    "d3-graphviz": "^5.6.0",
+    "dotparser": "^1.1.1",
     "filepond": "^4.32.10",
+    "graphology": "^0.26.0",
+    "sigma": "^3.0.2",
     "split.js": "^1.6.0"
   },
   "devDependencies": {
