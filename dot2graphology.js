@@ -1,27 +1,19 @@
-var parse = require('dotparser');
-import { readFileSync } from 'node:fs';
+import Graph from 'graphology';
 
-//const { readFileSync } = await import('node:fs');
-
-var str = readFileSync('/home/comicfans/project/ClickHouse/build/dot.dot', 'utf8');
-
-var ast = parse(str);
-
-console.assert(ast.length== 1);
-
-var children = ast[0].children;
-
-
-
-
-
-function parse_graph(node){
+export default function parse_graph(node){
 
   const graph = new Graph();
+  graph.setAttribute("attrs", {});
+  parse_recursive(graph, node, [])
+
+  return {"id": node.id, "graph":graph, "ast": node};
+}
+
+function parse_recursive(graph, node, path_to_root){
 
   const attrs = [];
 
-  for(const child of children){
+  for(const child of node.children){
 
     if (child.type == 'attr_stmt'){
       attrs.push(child);
@@ -29,23 +21,24 @@ function parse_graph(node){
     }
 
     if(child.type == 'subgraph'){
-      const sub_graph = parse_graph(child);
-      graph.addNode(sub_graph.id, sub_graph);
+      parse_recursive(graph, child, path_to_root.concat([child.id]));
       continue;
     }
 
     if(child.type == 'node_stmt'){
-      graph.addNode(child.node_id.id, {"ast": child});
+
+      const label = (child.attr_list.find(e=>e.id == 'label') ?? {"eq": child.node_id.id}).eq;
+
+      graph.addNode(path_to_root.concat([child.node_id.id]), {"label": label,"ast": child});
       continue;
     }
 
     console.assert(child.type == 'edge_stmt');
-    graph.addEdge(child.edge_list[0].id, child.edge_list[1].id, {"ast":child});
-
+    graph.addEdge(path_to_root.concat([child.edge_list[0].id]), path_to_root.concat([child.edge_list[1].id]), {"ast":child});
   }
 
-  return {"id": node.id, "graph":graph, "ast": node};
+  graph.getAttribute("attrs")[path_to_root]=attrs;
 }
 
 
-module.exports = {parse_graph};
+
