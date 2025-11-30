@@ -50,13 +50,27 @@ const file = localFile.files[0]; // get the first selected file
 
 localFile.addEventListener('change', loadLocalDot);
 
-function postprocess_graph(graph){
+function postprocess_graph(graph, old_graph = null){
   const global_group = graph.findNode((node,attributes)=>{return attributes.label == "global-group"});
   if(global_group!=undefined){
     graph.dropNode(global_group);
   }
-  random.assign(graph);
-  forceAtlas2.assign(graph, {"iterations": 50});
+
+  if(old_graph != null){
+    // try to assign x,y from old_graph node with same id 
+    graph.forEachNode((node, attributes)=>{
+      const old_attrs = old_graph.getNodeAttributes(node);
+      attributes.x = old_attrs?.x ?? Math.random();
+      attributes.y = old_attrs?.y ?? Math.random();
+    });
+  }else{
+    random.assign(graph);
+  }
+
+  // always assign fixed x,y for initial layout
+
+  // TODO, if two graph topologically equal, reuse positions
+  forceAtlas2.assign(graph, {"iterations": old_graph?1:50});
 
   // scale node size by in+out edge count
 
@@ -83,11 +97,13 @@ function repaint(){
     console.assert(ast.length == 1);
     const p = parse_graph(ast[0]);
 
-    postprocess_graph(p.graph);
+    postprocess_graph(p.graph, sigma?.getGraph());
 
     if(!sigma){
       sigma = new Sigma(p.graph, document.getElementById("graph"));
     }else{
+      const old_graph  = sigma.getGraph();
+
       sigma.setGraph(p.graph);
     }
 
