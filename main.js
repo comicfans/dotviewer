@@ -42,6 +42,8 @@ function loadLocalDot(){
   // Read file as text
   reader.onload = (e) => {
     contents.value= e.target.result; // file content
+    //reset highlight state
+    highlightState  = {node: null, neighbors: new Set()};
     repaint();
   };
 
@@ -105,10 +107,10 @@ function updateHighlightNeighbor(){
       return depth >= dependency_depth ;
     });
 
-    const dependence_depth = document.getElementById("dependence-depth").valueAsNumber;
+    const dependent_depth = document.getElementById("dependent-depth").valueAsNumber;
     bfsFromNode(sigma.getGraph(), highlightState.node, function(node, attr, depth){
       highlightState.neighbors.add(node);
-      return depth >= dependence_depth ;
+      return depth >= dependent_depth ;
     },{mode:"inbound"});
   }
 }
@@ -295,7 +297,7 @@ function reHighlight(){
 
 document.getElementById('painting-method').addEventListener('change', repaint);
 document.getElementById('dependency-depth').addEventListener('change', reHighlight);
-document.getElementById('dependence-depth').addEventListener('change', reHighlight);
+document.getElementById('dependent-depth').addEventListener('change', reHighlight);
 
 
 repaint();
