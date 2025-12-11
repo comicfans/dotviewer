@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "esbuild main.js --bundle --outfile=dist/bundle.js --servedir=. --sourcemap",
-    "build": "esbuild main.js --bundle --minify --outfile=dist/bundle.js"
+    "build": "esbuild main.js --bundle --minify --outfile=dist/bundle.js",
+    "postinstall": "mkdir iwanthue; cd iwanthue; git init; git remote add -f origin https://github.com/comicfans/iwanthue; git config core.sparseCheckout true; echo \"npm\" >> .git/info/sparse-checkout; git pull --depth=1 origin cubic_to_quadratic; cd ..; npm i ./iwanthue/npm/"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
@@ -18,6 +19,8 @@
     "graphology": "^0.26.0",
     "graphology-layout": "^0.6.1",
     "graphology-layout-forceatlas2": "^0.10.1",
+    "graphology-traversal": "^0.3.1",
+    "iwanthue": "file:iwanthue/npm",
     "sigma": "^3.0.2",
     "split.js": "^1.6.0"
   },
